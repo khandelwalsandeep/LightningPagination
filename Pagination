@@ -1,0 +1,68 @@
+<aura:component controller="PaginationController" implements="force:appHostable">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" description="Initialize the page content on page load" />
+    <aura:handler name="change" action="{!c.handlePageChange}" value="{!v.pageNumber}" description="Calls a controller when the page number changes" />
+    <aura:handler name="change" action="{!c.handlePageChange}" value="{!v.recordsPerPage}" description="Calls a controller when the page number changes" />
+
+    <aura:attribute name="allAccounts" type="Account[]" description="An Account list containing all the accounts" />
+    <aura:attribute name="currentList" type="Account[]" description="List of Accounts to be displayed in the current page" />
+
+    <aura:attribute name="recordsPerPage" type="Integer" default="5" description="Number of records to display per page" />
+    <aura:attribute name="maxPage" type="Integer" description="Total number of pages as per number of records per page" />
+    <aura:attribute name="pageNumber" type="Integer" default="1" description="Current page number" />
+
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body">
+                    <h2>
+                        <span class="slds-text-heading_small slds-align_absolute-center"><b>Pagination</b></span>
+                    </h2>
+                </div>
+            </header>
+        </div>
+    </article>
+    <br></br>
+    
+    <c:Paginator currentPageNumber="{!v.pageNumber}" maxPageNumber="{!v.maxPage}" />
+    <br></br>
+    <div class="slds-grid slds-align_absolute-center" style="max-width: 800px;">
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Name">Name</div>
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Type">Phone</div>
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Date">Account Number</div>
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Desc">Billing Address</div>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.currentList}" var="acc">
+                    <tr>
+                        <td scope="row" class="">
+                            <div class="slds-truncate">{!acc.Name}</div>
+                        </td>
+                        <td scope="row" class="">
+                            <div class="slds-truncate">{!acc.Phone}</div>
+                        </td>
+                        <td scope="row" class="">
+                            <div class="slds-truncate">{!acc.AccountNumber}</div>
+                        </td>
+                        <td scope="row" class="">
+                            <div class="slds-truncate"><ui:outputCurrency value="{!acc.AnnualRevenue}"></ui:outputCurrency></div>
+                        </td>
+
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+</aura:component>
